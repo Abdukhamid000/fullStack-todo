@@ -40,4 +40,15 @@ export class AuthService {
       ),
     };
   }
+  refreshToken({ refresh_token }) {
+    const decodedPayload = this.jwtService.verify(refresh_token);
+    if (!decodedPayload)
+      throw new HttpException('Invalid refresh token', HttpStatus.FORBIDDEN);
+
+    const userId = decodedPayload.userId;
+
+    return {
+      access_token: this.jwtService.sign({ userId }),
+    };
+  }
 }

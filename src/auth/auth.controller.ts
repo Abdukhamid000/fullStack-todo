@@ -10,4 +10,9 @@ export class AuthController {
   async login(@Body() userDto: UserDto) {
     return await this.authService.signIn(userDto);
   }
+
+  @Post('refresh')
+  refreshAccessToken(@Body() payload: any) {
+    return this.authService.refreshToken(payload);
+  }
 }
